@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        // \Illuminate\Http\Middleware\ContentLengthMiddleware::class,
+        \App\Http\Middleware\CheckContentLength::class,
     ];
 
     /**
