@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 04:52 AM
+-- Generation Time: Aug 02, 2024 at 05:05 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -99,18 +99,17 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `role` int(11) NOT NULL DEFAULT 3,
   `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
-  `latitude` varchar(25) NOT NULL,
-  `longitude` varchar(25) NOT NULL,
+  `latitude` varchar(75) NOT NULL,
+  `longitude` varchar(75) NOT NULL,
   `date_of_birth` date NOT NULL,
   `timezone` varchar(75) NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
