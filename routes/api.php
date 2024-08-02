@@ -19,13 +19,11 @@ use App\Http\Controllers\UserController;
 // });
 
 Route::post('login', [UserController::class, 'login']);
-Route::post('users', [UserController::class, 'createUser']);
+Route::post('register', [UserController::class, 'store']);
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::middleware('throttle:60,1')->group(function () {
-        Route::get('users/{id}', [UserController::class, 'userDetail']);
-        Route::put('users/{id}', [UserController::class, 'update']);
-        Route::delete('users/{id}', [UserController::class, 'destroy']);
+        Route::apiResource('users', UserController::class);
     });
 });
 

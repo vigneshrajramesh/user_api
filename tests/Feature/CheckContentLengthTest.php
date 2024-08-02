@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use JWTAuth;
 
 class CheckContentLengthTest extends TestCase
 {
@@ -47,10 +49,15 @@ class CheckContentLengthTest extends TestCase
     }
     public function test_request_exceeding_content_length_limit()
     {
+        $user = User::factory()->create();
+        $token = JWTAuth::fromUser($user);
+
         // 2 MB
         $payload = str_repeat('a', 2 * 1024 * 1024);
         $generatedEmail='vignesh.' . uniqid() . '@gmail.com';
-        $response = $this->postJson('/api/users', [
+         $response = $this->withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+            ])->postJson('/api/users', [
             'first_name' => 'Vigneshraj',
             'last_name' => 'R',
             'role' => 'Admin',

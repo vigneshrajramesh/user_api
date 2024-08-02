@@ -28,7 +28,17 @@ class UserController extends Controller
         ];
     }
 
-    public function createUser(UserRequest $request)
+    public function index()
+    {
+        $users = User::all();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Details !!',
+            'data' => $users
+        ],200);
+    }
+
+    public function store(UserRequest $request)
     {
         try {
             Log::info('User creation request received', ['request' => $request->all()]);
@@ -102,7 +112,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function userDetail($id){
+    public function show($id){
         try{
             $user= User::find($id);
             if(!$user){
