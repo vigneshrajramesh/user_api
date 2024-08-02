@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
             'timezone' => 'required|string|max:255',
         ];
         if ($this->isMethod('put')) {
-            $userId = $this->route('id');
+            $userId = $this->route('user');
             $rules['email'] = 'required|email|unique:users,email,' . $userId;
         }
 

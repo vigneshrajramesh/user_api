@@ -16,10 +16,44 @@ class UserTest extends TestCase
      *
      * @return void
      */
+    public function test_register_user()
+    {
+        $generatedEmail='vignesh.' . uniqid() . '@gmail.com';
+        $response = $this->postJson('/api/register', [
+            'first_name' => 'Vigneshraj',
+            'last_name' => 'R',
+            'role' => 'Admin',
+            'email' => $generatedEmail,
+            'latitude' => '12.34',
+            'longitude' => '56.78',
+            'date_of_birth' => '1990-04-12',
+            'timezone' => 'Asia/Kolkata',
+            'password' => '12345678'
+        ]);
+
+        $response->assertStatus(201)
+                 ->assertJsonStructure([
+                     'status',
+                     'message',
+                     'data' => [
+                         'userId',
+                         'token'
+                     ]
+                 ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => $generatedEmail,
+        ]);
+    }
+
     public function test_create_user()
     {
         $generatedEmail='vignesh.' . uniqid() . '@gmail.com';
-        $response = $this->postJson('/api/users', [
+        $user = User::factory()->create();// Create a user
+        $token = JWTAuth::fromUser($user);
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->postJson('/api/users', [
             'first_name' => 'Vigneshraj',
             'last_name' => 'R',
             'role' => 'Admin',
